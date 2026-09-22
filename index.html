@@ -1,0 +1,1300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AURASSI PMS - Hébergement</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+margin:0;
+font-family:Arial,sans-serif;
+background:#f3f4f6;
+color:#111827
+}
+
+.app{
+display:flex;
+min-height:100vh
+}
+
+.side{
+width:250px;
+background:#111827;
+color:white;
+padding:18px;
+position:fixed;
+inset:0 auto 0 0
+}
+
+.logo{
+font-size:22px;
+font-weight:800;
+margin-bottom:22px
+}
+
+.logo small{
+display:block;
+color:#9ca3af;
+font-size:11px;
+margin-top:5px
+}
+
+.menu button{
+display:block;
+width:100%;
+border:0;
+background:none;
+color:#d1d5db;
+text-align:left;
+padding:11px;
+border-radius:8px;
+margin:4px 0;
+font-size:14px
+}
+
+.menu button.active,
+.menu button:hover{
+background:#374151;
+color:white
+}
+
+.main{
+margin-left:250px;
+padding:22px;
+width:calc(100% - 250px)
+}
+
+.top{
+display:flex;
+justify-content:space-between;
+gap:12px;
+align-items:center;
+margin-bottom:20px
+}
+
+h1{margin:0}
+
+.sub{
+color:#6b7280
+}
+
+.user{
+background:white;
+padding:10px 14px;
+border-radius:10px
+}
+
+.page{
+display:none
+}
+
+.page.active{
+display:block
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:12px;
+margin-bottom:18px
+}
+
+.card,
+.panel{
+background:white;
+border-radius:12px;
+padding:18px;
+box-shadow:0 2px 8px #0001
+}
+
+.card b{
+font-size:27px;
+display:block;
+margin-top:7px
+}
+
+.muted{
+color:#6b7280;
+font-size:13px
+}
+
+.floorbar{
+display:flex;
+gap:7px;
+overflow:auto;
+margin-bottom:15px;
+padding-bottom:4px
+}
+
+.floorbar button{
+border:0;
+background:#e5e7eb;
+padding:10px 14px;
+border-radius:8px;
+white-space:nowrap;
+font-weight:700
+}
+
+.floorbar button.active{
+background:#111827;
+color:white
+}
+
+.rooms{
+display:grid;
+grid-template-columns:repeat(5,1fr);
+gap:10px
+}
+
+.room{
+border-radius:10px;
+padding:13px 8px;
+text-align:center;
+cursor:pointer;
+border:2px solid transparent;
+transition:.15s
+}
+
+.room:hover{
+transform:translateY(-1px)
+}
+
+.room b{
+font-size:18px
+}
+
+.room small{
+display:block;
+margin-top:5px
+}
+
+.unknown{
+background:#f3f4f6;
+color:#6b7280
+}
+
+.clean{
+background:#dcfce7;
+color:#166534
+}
+
+.dirty{
+background:#fef3c7;
+color:#92400e
+}
+
+.ooo{
+background:#fee2e2;
+color:#991b1b
+}
+
+.occ{
+outline:3px solid #2563eb33
+}
+
+.badge{
+display:inline-block;
+padding:4px 7px;
+border-radius:6px;
+font-size:11px;
+font-weight:700
+}
+
+.bgreen{
+background:#dcfce7;
+color:#166534
+}
+
+.borange{
+background:#fef3c7;
+color:#92400e
+}
+
+.bred{
+background:#fee2e2;
+color:#991b1b
+}
+
+.bblue{
+background:#dbeafe;
+color:#1e40af
+}
+
+.bgray{
+background:#e5e7eb;
+color:#374151
+}
+
+table{
+width:100%;
+border-collapse:collapse
+}
+
+th,td{
+padding:10px 8px;
+border-bottom:1px solid #eee;
+text-align:left;
+font-size:13px
+}
+
+th{
+color:#6b7280
+}
+
+.scroll{
+overflow:auto
+}
+
+.btn{
+border:0;
+border-radius:8px;
+padding:10px 13px;
+background:#111827;
+color:white;
+font-weight:700;
+cursor:pointer
+}
+
+.btn.red{
+background:#dc2626
+}
+
+.modal{
+display:none;
+position:fixed;
+inset:0;
+background:#0008;
+align-items:center;
+justify-content:center;
+padding:18px;
+z-index:20
+}
+
+.box{
+background:white;
+border-radius:15px;
+padding:20px;
+width:min(520px,100%)
+}
+
+.box h2{
+margin-top:0
+}
+
+.row{
+margin:10px 0
+}
+
+.row label{
+display:block;
+font-size:12px;
+font-weight:700;
+margin-bottom:5px
+}
+
+.row input,
+.row select{
+width:100%;
+padding:10px;
+border:1px solid #d1d5db;
+border-radius:8px
+}
+
+.actions{
+display:flex;
+gap:8px;
+margin-top:15px
+}
+
+@media(max-width:900px){
+
+.side{
+position:relative;
+width:100%;
+height:auto
+}
+
+.app{
+display:block
+}
+
+.main{
+margin:0;
+width:100%;
+padding:14px
+}
+
+.menu{
+display:flex;
+overflow:auto;
+gap:4px
+}
+
+.menu button{
+white-space:nowrap;
+width:auto
+}
+
+.cards{
+grid-template-columns:repeat(2,1fr)
+}
+
+.rooms{
+grid-template-columns:repeat(3,1fr)
+}
+
+}
+
+@media(max-width:500px){
+
+.rooms{
+grid-template-columns:repeat(2,1fr)
+}
+
+.cards{
+grid-template-columns:repeat(2,1fr)
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<aside class="side">
+
+<div class="logo">
+🏨 AURASSI
+<small>PMS • HÉBERGEMENT</small>
+</div>
+
+<div class="menu">
+
+<button class="active"
+onclick="page('dashboard',this)">
+📊 Dashboard
+</button>
+
+<button onclick="page('hebergement',this)">
+🛏️ Hébergement
+</button>
+
+<button onclick="page('housekeeping',this)">
+🧹 Housekeeping
+</button>
+
+<button onclick="page('maintenance',this)">
+🔧 Maintenance
+</button>
+
+<button onclick="page('travaux',this)">
+🏗️ Travaux
+</button>
+
+</div>
+</aside>
+
+
+<main class="main">
+
+<div class="top">
+
+<div>
+<h1 id="title">Dashboard</h1>
+<div class="sub">
+Service Hébergement
+</div>
+</div>
+
+<div class="user">
+👤 Manager
+</div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+
+<div class="cards">
+
+<div class="card">
+<span class="muted">Unités affichées</span>
+<b id="total">0</b>
+</div>
+
+<div class="card">
+<span class="muted">OCC</span>
+<b id="occ">0</b>
+</div>
+
+<div class="card">
+<span class="muted">VAC</span>
+<b id="vac">0</b>
+</div>
+
+<div class="card">
+<span class="muted">Dirty</span>
+<b id="dirty">0</b>
+</div>
+
+<div class="card">
+<span class="muted">Out of Order</span>
+<b id="ooo">0</b>
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>🏨 Structure des étages</h2>
+
+<p class="muted">
+9 étages de chambres + 101–130 Suites Présidentielles.
+Les informations non présentes dans le rapport restent
+« Non renseigné ».
+</p>
+
+<div id="dashFloors"></div>
+
+</div>
+
+</section>
+
+
+<!-- HEBERGEMENT -->
+
+<section id="hebergement" class="page">
+
+<div class="panel">
+
+<h2>🛏️ Hébergement</h2>
+
+<div class="floorbar" id="floors"></div>
+
+<div id="roomPanel"></div>
+
+</div>
+
+</section>
+
+
+<!-- HOUSEKEEPING -->
+
+<section id="housekeeping" class="page">
+
+<div class="panel">
+
+<h2>🧹 Rapport Housekeeping</h2>
+
+<div class="scroll">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Chb</th>
+<th>Type</th>
+<th>Statut</th>
+<th>Section</th>
+<th>Status FO</th>
+<th>Occupation</th>
+</tr>
+
+</thead>
+
+<tbody id="hk"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MAINTENANCE -->
+
+<section id="maintenance" class="page">
+
+<div class="panel">
+
+<h2>🔧 Maintenance</h2>
+
+<p class="muted">
+Les interventions seront liées à la chambre sélectionnée.
+Les chambres marquées « Out of Order » sont visibles dans
+le Housekeeping.
+</p>
+
+<div id="maint"></div>
+
+</div>
+
+</section>
+
+
+<!-- TRAVAUX -->
+
+<section id="travaux" class="page">
+
+<div class="panel">
+
+<h2>🏗️ Travaux & Aménagement</h2>
+
+<p class="muted">
+Une chambre en travaux peut être placée automatiquement
+« Out of Order ».
+</p>
+
+<div id="works"></div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- MODAL CHAMBRE -->
+
+<div class="modal" id="modal">
+
+<div class="box">
+
+<h2 id="mTitle"></h2>
+
+<div id="mBody"></div>
+
+<div class="actions">
+
+<button class="btn"
+onclick="saveRoom()">
+Enregistrer
+</button>
+
+<button class="btn red"
+onclick="closeM()">
+Annuler
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+
+/* =========================
+   STRUCTURE HOTEL
+========================= */
+
+const floorDefs=[
+
+{
+f:1,
+start:101,
+end:130,
+label:"1er • Suites Présidentielles",
+suite:true
+},
+
+{
+f:2,
+start:201,
+end:255
+},
+
+{
+f:3,
+start:301,
+end:355
+},
+
+{
+f:4,
+start:401,
+end:455
+},
+
+{
+f:5,
+start:501,
+end:555
+},
+
+{
+f:6,
+start:601,
+end:655
+},
+
+{
+f:7,
+start:701,
+end:755
+},
+
+{
+f:8,
+start:801,
+end:855
+},
+
+{
+f:9,
+start:901,
+end:955
+}
+
+];
+
+
+/* =========================
+   DONNEES REELLES
+   RAPPORT HOUSEKEEPING
+========================= */
+
+const real={
+
+301:["LUXK","Dirty","31","OCC","Recouches"],
+
+302:["LUXT","Dirty","31","OCC","Due Out"],
+
+303:["LUXK","Out of Order","31","VAC","Non Réservé"],
+
+304:["LUXK","Dirty","31","VAC","Non Réservé"],
+
+305:["LUXK","Out of Order","31","VAC","Non Réservé"],
+
+306:["LUXK","Dirty","32","VAC","Non Réservé"],
+
+307:["LUXK","Clean","32","VAC","Non Réservé"],
+
+308:["LUXK","Clean","32","VAC","Non Réservé"],
+
+309:["LUXT","Clean","32","VAC","Non Réservé"],
+
+310:["LUXT","Dirty","32","OCC","Recouches"],
+
+311:["LUXT","Clean","33","VAC","Non Réservé"],
+
+312:["LUXK","Dirty","33","OCC","Recouches"],
+
+313:["LUXK","Dirty","33","OCC","Recouches"],
+
+314:["LUXT","Dirty","33","OCC","Recouches"],
+
+316:["PRESTI","Clean","34","VAC","Non Réservé"],
+
+318:["PRESTI","Dirty","34","OCC","Due Out"],
+
+319:["LUXK","Dirty","34","OCC","Recouches"],
+
+320:["LUXK","Dirty","34","OCC","Recouches"],
+
+321:["LUXT","Dirty","35","OCC","Due Out"],
+
+322:["LUXK","Dirty","35","OCC","Due Out"],
+
+323:["LUXK","Dirty","35","OCC","Due Out"],
+
+324:["LUXT","Out of Order","35","VAC","Non Réservé"],
+
+325:["LUXT","Clean","35","VAC","Non Réservé"],
+
+326:["LUXX","Dirty","36","OCC","Due Out"],
+
+327:["LUXK","Dirty","36","OCC","Due Out"],
+
+328:["LUXT","Dirty","36","OCC","Recouches"],
+
+329:["LUXK","Out of Order","36","VAC","Non Réservé"],
+
+330:["LUXK","Out of Order","36","VAC","Non Réservé"],
+
+331:["CONFOR","Clean","36","VAC","Non Réservé"],
+
+332:["STDK","Dirty","36","VAC","Non Réservé"],
+
+333:["STDK","Out of Order","36","VAC","Non Réservé"],
+
+334:["STDT","Out of Order","36","VAC","Non Réservé"],
+
+335:["STDK","Dirty","35","OCC","Recouches"],
+
+336:["STDK","Dirty","35","OCC","Due Out"],
+
+337:["STDT","Clean","35","VAC","Non Réservé"],
+
+338:["STDK","Dirty","35","OCC","Recouches"],
+
+339:["STDK","Dirty","35","OCC","Recouches"],
+
+340:["STDT","Clean","34","VAC","Non Réservé"],
+
+341:["STDK","Out of Order","34","VAC","Non Réservé"],
+
+342:["STDK","Out of Order","34","VAC","Non Réservé"],
+
+343:["STDK","Dirty","33","OCC","Recouches"],
+
+344:["STDK","Clean","33","VAC","Non Réservé"],
+
+345:["STDK","Dirty","33","OCC","Recouches"],
+
+346:["STDK","Dirty","33","OCC","Recouches"],
+
+347:["STDT","Out of Order","33","VAC","Non Réservé"],
+
+348:["STDK","Dirty","32","OCC","Recouches"],
+
+349:["STDK","Out of Order","32","VAC","Non Réservé"],
+
+350:["STDK","Dirty","32","OCC","Recouches"]
+
+};
+
+
+/* =========================
+   CREATION CHAMBRE
+========================= */
+
+function key(id){
+
+return "aurassi_room_"+id;
+
+}
+
+
+function makeRoom(id){
+
+let r=real[id];
+
+if(r){
+
+return {
+
+id:id,
+type:r[0],
+hk:r[1],
+section:r[2],
+fo:r[3],
+occ:r[4],
+known:true
+
+};
+
+}
+
+
+let saved=localStorage.getItem(key(id));
+
+if(saved){
+
+return JSON.parse(saved);
+
+}
+
+
+return {
+
+id:id,
+
+type:
+id>=101 && id<=130
+?"SUITE PRESIDENTIELLE"
+:"Non renseigné",
+
+hk:"Non renseigné",
+
+section:"Non renseigné",
+
+fo:"Non renseigné",
+
+occ:"Non renseigné",
+
+known:false
+
+};
+
+}
+
+
+function allRooms(){
+
+let a=[];
+
+floorDefs.forEach(x=>{
+
+for(let n=x.start;n<=x.end;n++){
+
+a.push(makeRoom(n));
+
+}
+
+});
+
+return a;
+
+}
+
+
+let selected=null;
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function page(id,btn){
+
+document
+.querySelectorAll(".page")
+.forEach(x=>x.classList.remove("active"));
+
+document
+.getElementById(id)
+.classList.add("active");
+
+document
+.querySelectorAll(".menu button")
+.forEach(x=>x.classList.remove("active"));
+
+btn.classList.add("active");
+
+document.getElementById("title").textContent={
+
+dashboard:"Dashboard",
+
+hebergement:"Hébergement",
+
+housekeeping:"Housekeeping",
+
+maintenance:"Maintenance",
+
+travaux:"Travaux & Aménagement"
+
+}[id];
+
+render();
+
+}
+
+
+/* =========================
+   COULEURS CHAMBRES
+========================= */
+
+function cls(r){
+
+if(r.hk==="Clean")
+return "clean";
+
+if(r.hk==="Dirty")
+return "dirty";
+
+if(r.hk==="Out of Order")
+return "ooo";
+
+return "unknown";
+
+}
+
+
+function badge(v){
+
+let c=
+v==="OCC"
+?"bblue":
+
+v==="VAC"
+?"bgreen":
+
+v==="Out of Order"
+?"bred":
+
+v==="Dirty"
+?"borange":
+
+v==="Clean"
+?"bgreen":
+
+"bgray";
+
+return `<span class="badge ${c}">${v}</span>`;
+
+}
+
+
+/* =========================
+   ETAGES
+========================= */
+
+function floorButtons(){
+
+document.getElementById("floors").innerHTML=
+
+floorDefs.map((x,i)=>`
+
+<button
+class="${i===2?'active':''}"
+onclick="showFloor(${x.f},this)">
+
+${x.f===1?'1er':x.f+'ème'}
+
+</button>
+
+`).join("");
+
+showFloor(
+3,
+document.querySelectorAll("#floors button")[2]
+);
+
+}
+
+
+function showFloor(f,btn){
+
+document
+.querySelectorAll("#floors button")
+.forEach(x=>x.classList.remove("active"));
+
+if(btn)
+btn.classList.add("active");
+
+let x=
+floorDefs.find(z=>z.f===f);
+
+let rs=[];
+
+for(let n=x.start;n<=x.end;n++)
+rs.push(makeRoom(n));
+
+document.getElementById("roomPanel").innerHTML=`
+
+<h3>
+
+${x.label || f+"ème étage"}
+
+<span class="muted">
+
+(${rs.length} unités)
+
+</span>
+
+</h3>
+
+<div class="rooms">
+
+${rs.map(r=>`
+
+<div
+class="room ${cls(r)} ${r.fo==='OCC'?'occ':''}"
+onclick="openRoom(${r.id})">
+
+<b>${r.id}</b>
+
+<small>${r.type}</small>
+
+<small>${r.hk}</small>
+
+</div>
+
+`).join("")}
+
+</div>
+
+`;
+
+}
+
+
+/* =========================
+   OUVERTURE CHAMBRE
+========================= */
+
+function openRoom(id){
+
+selected=makeRoom(id);
+
+document.getElementById("mTitle").textContent=
+"Chambre "+id;
+
+document.getElementById("mBody").innerHTML=`
+
+<div class="row">
+
+<label>Type</label>
+
+<input
+id="rt"
+value="${selected.type}">
+
+</div>
+
+
+<div class="row">
+
+<label>Housekeeping</label>
+
+<select id="rh">
+
+<option>Non renseigné</option>
+<option>Clean</option>
+<option>Dirty</option>
+<option>Out of Order</option>
+
+</select>
+
+</div>
+
+
+<div class="row">
+
+<label>Status FO</label>
+
+<select id="rf">
+
+<option>Non renseigné</option>
+<option>OCC</option>
+<option>VAC</option>
+
+</select>
+
+</div>
+
+
+<div class="row">
+
+<label>Condition occupation</label>
+
+<select id="ro">
+
+<option>Non renseigné</option>
+<option>Recouches</option>
+<option>Due Out</option>
+<option>Non Réservé</option>
+
+</select>
+
+</div>
+
+`;
+
+document.getElementById("rh").value=selected.hk;
+
+document.getElementById("rf").value=selected.fo;
+
+document.getElementById("ro").value=selected.occ;
+
+document.getElementById("modal").style.display="flex";
+
+}
+
+
+/* =========================
+   ENREGISTREMENT
+========================= */
+
+function saveRoom(){
+
+selected.type=
+document.getElementById("rt").value;
+
+selected.hk=
+document.getElementById("rh").value;
+
+selected.fo=
+document.getElementById("rf").value;
+
+selected.occ=
+document.getElementById("ro").value;
+
+selected.known=true;
+
+localStorage.setItem(
+key(selected.id),
+JSON.stringify(selected)
+);
+
+closeM();
+
+render();
+
+}
+
+
+function closeM(){
+
+document.getElementById("modal").style.display="none";
+
+}
+
+
+/* =========================
+   HOUSEKEEPING
+========================= */
+
+function renderHK(){
+
+document.getElementById("hk").innerHTML=
+
+allRooms()
+
+.filter(r=>r.known)
+
+.map(r=>`
+
+<tr>
+
+<td>${r.id}</td>
+
+<td>${r.type}</td>
+
+<td>${badge(r.hk)}</td>
+
+<td>${r.section}</td>
+
+<td>${badge(r.fo)}</td>
+
+<td>${r.occ}</td>
+
+</tr>
+
+`).join("");
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function renderDash(){
+
+let rs=allRooms();
+
+let known=
+rs.filter(r=>r.known);
+
+let occ=
+known.filter(r=>r.fo==="OCC").length;
+
+let vac=
+known.filter(r=>r.fo==="VAC").length;
+
+let dirty=
+known.filter(r=>r.hk==="Dirty").length;
+
+let ooo=
+known.filter(r=>r.hk==="Out of Order").length;
+
+
+document.getElementById("total").textContent=
+rs.length;
+
+document.getElementById("occ").textContent=
+occ;
+
+document.getElementById("vac").textContent=
+vac;
+
+document.getElementById("dirty").textContent=
+dirty;
+
+document.getElementById("ooo").textContent=
+ooo;
+
+
+document.getElementById("dashFloors").innerHTML=
+
+floorDefs.map(x=>`
+
+<div
+style="
+display:flex;
+justify-content:space-between;
+padding:10px 0;
+border-bottom:1px solid #eee
+">
+
+<span>
+
+${x.label || x.f+"ème étage"}
+
+</span>
+
+<b>
+
+${x.end-x.start+1}
+
+</b>
+
+</div>
+
+`).join("");
+
+}
+
+
+/* =========================
+   RENDER
+========================= */
+
+function render(){
+
+renderDash();
+
+floorButtons();
+
+renderHK();
+
+document.getElementById("maint").innerHTML=`
+
+<p class="muted">
+
+🔧 Maintenance liée aux chambres.
+
+Les chambres marquées
+« Out of Order »
+sont visibles dans le Housekeeping.
+
+</p>
+
+`;
+
+document.getElementById("works").innerHTML=`
+
+<p class="muted">
+
+🏗️ Module Travaux prêt à être relié
+aux statuts des chambres.
+
+</p>
+
+`;
+
+}
+
+
+render();
+
+</script>
+
+</body>
+</html>
