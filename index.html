@@ -1,641 +1,1645 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AURASSI HOTEL SYSTEM</title>
+<title>AURASSI HOTEL SYSTEM</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
 
-    body {
-      background: #f4f5f7;
-      color: #222;
-    }
+body{
+  background:#f4f5f7;
+  color:#111827;
+}
 
-    .app {
-      display: flex;
-      min-height: 100vh;
-    }
+.app{
+  display:flex;
+  min-height:100vh;
+}
 
-    /* SIDEBAR */
+/* SIDEBAR */
 
-    .sidebar {
-      width: 250px;
-      background: #111827;
-      color: white;
-      padding: 20px;
-    }
+.sidebar{
+  width:250px;
+  background:#111827;
+  color:white;
+  padding:20px;
+  position:fixed;
+  height:100vh;
+  left:0;
+  top:0;
+}
 
-    .logo {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 30px;
-    }
+.logo{
+  font-size:22px;
+  font-weight:bold;
+  margin-bottom:30px;
+}
 
-    .logo span {
-      display: block;
-      font-size: 12px;
-      color: #9ca3af;
-      margin-top: 5px;
-    }
+.logo small{
+  display:block;
+  color:#9ca3af;
+  font-size:11px;
+  margin-top:5px;
+}
 
-    .menu-title {
-      font-size: 11px;
-      color: #9ca3af;
-      margin: 20px 0 8px;
-      text-transform: uppercase;
-    }
+.menu-title{
+  color:#9ca3af;
+  font-size:11px;
+  margin:18px 0 7px;
+}
 
-    .menu button {
-      width: 100%;
-      border: none;
-      background: transparent;
-      color: #d1d5db;
-      text-align: left;
-      padding: 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-bottom: 4px;
-      font-size: 14px;
-    }
+.menu button{
+  width:100%;
+  padding:12px;
+  margin-bottom:5px;
+  border:0;
+  border-radius:8px;
+  background:transparent;
+  color:#d1d5db;
+  text-align:left;
+  cursor:pointer;
+  font-size:14px;
+}
 
-    .menu button:hover,
-    .menu button.active {
-      background: #374151;
-      color: white;
-    }
+.menu button:hover,
+.menu button.active{
+  background:#374151;
+  color:white;
+}
 
-    /* MAIN */
+/* MAIN */
 
-    .main {
-      flex: 1;
-      padding: 25px;
-      overflow-x: hidden;
-    }
+.main{
+  margin-left:250px;
+  width:calc(100% - 250px);
+  padding:25px;
+}
 
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-    }
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:25px;
+}
 
-    .topbar h1 {
-      font-size: 26px;
-    }
+.topbar h1{
+  font-size:28px;
+}
 
-    .user {
-      background: white;
-      padding: 10px 15px;
-      border-radius: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.05);
-    }
+.user{
+  background:white;
+  padding:12px 18px;
+  border-radius:10px;
+  box-shadow:0 2px 8px #00000010;
+}
 
-    /* CARDS */
+/* PAGES */
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 15px;
-      margin-bottom: 25px;
-    }
+.page{
+  display:none;
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.05);
-    }
+.page.active{
+  display:block;
+}
 
-    .card-title {
-      color: #6b7280;
-      font-size: 13px;
-      margin-bottom: 10px;
-    }
+/* CARDS */
 
-    .card-value {
-      font-size: 28px;
-      font-weight: bold;
-    }
+.cards{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:25px;
+}
 
-    /* CONTENT */
+.card{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  box-shadow:0 2px 8px #0000000d;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
-    }
+.card-title{
+  color:#6b7280;
+  font-size:13px;
+  margin-bottom:10px;
+}
 
-    .panel {
-      background: white;
-      padding: 20px;
-      border-radius: 12px;
-      box-shadow: 0 2px 8px rgba(0,0,0,.05);
-      margin-bottom: 20px;
-    }
+.card-value{
+  font-size:30px;
+  font-weight:bold;
+}
 
-    .panel h2 {
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
+/* PANEL */
 
-    /* ROOMS */
+.panel{
+  background:white;
+  border-radius:12px;
+  padding:20px;
+  margin-bottom:20px;
+  box-shadow:0 2px 8px #0000000d;
+}
 
-    .rooms {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 10px;
-    }
+.panel h2{
+  margin-bottom:18px;
+}
 
-    .room {
-      padding: 15px 8px;
-      border-radius: 8px;
-      text-align: center;
-      font-weight: bold;
-      cursor: pointer;
-    }
+/* ROOMS */
 
-    .available {
-      background: #dcfce7;
-      color: #166534;
-    }
+.rooms{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:12px;
+}
 
-    .occupied {
-      background: #fee2e2;
-      color: #991b1b;
-    }
+.room{
+  padding:18px 8px;
+  border-radius:10px;
+  text-align:center;
+  cursor:pointer;
+  font-weight:bold;
+  transition:.2s;
+}
 
-    .cleaning {
-      background: #fef3c7;
-      color: #92400e;
-    }
+.room:hover{
+  transform:scale(1.03);
+}
 
-    .maintenance {
-      background: #e0e7ff;
-      color: #3730a3;
-    }
+.room small{
+  display:block;
+  margin-top:6px;
+  font-weight:normal;
+}
 
-    .room small {
-      display: block;
-      font-weight: normal;
-      margin-top: 5px;
-    }
+.available{
+  background:#dcfce7;
+  color:#166534;
+}
 
-    /* TASKS */
+.occupied{
+  background:#fee2e2;
+  color:#991b1b;
+}
 
-    .task {
-      display: flex;
-      justify-content: space-between;
-      padding: 12px 0;
-      border-bottom: 1px solid #eee;
-    }
+.cleaning{
+  background:#fef3c7;
+  color:#92400e;
+}
 
-    .task:last-child {
-      border-bottom: none;
-    }
+.maintenance{
+  background:#e0e7ff;
+  color:#3730a3;
+}
 
-    .badge {
-      padding: 5px 8px;
-      border-radius: 6px;
-      font-size: 11px;
-      font-weight: bold;
-    }
+.out{
+  background:#e5e7eb;
+  color:#374151;
+}
 
-    .high {
-      background: #fee2e2;
-      color: #991b1b;
-    }
+/* GRID */
 
-    .medium {
-      background: #fef3c7;
-      color: #92400e;
-    }
+.grid{
+  display:grid;
+  grid-template-columns:2fr 1fr;
+  gap:20px;
+}
 
-    .low {
-      background: #dcfce7;
-      color: #166534;
-    }
+/* TASK */
 
-    /* RESPONSIVE */
+.task{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid #eee;
+}
 
-    @media (max-width: 1000px) {
+.task:last-child{
+  border-bottom:0;
+}
 
-      .sidebar {
-        width: 210px;
-      }
+.badge{
+  padding:6px 9px;
+  border-radius:6px;
+  font-size:11px;
+  font-weight:bold;
+}
 
-      .cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
+.red{
+  background:#fee2e2;
+  color:#991b1b;
+}
 
-      .rooms {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
+.orange{
+  background:#fef3c7;
+  color:#92400e;
+}
 
-    @media (max-width: 700px) {
+.green{
+  background:#dcfce7;
+  color:#166534;
+}
 
-      .app {
-        display: block;
-      }
+.blue{
+  background:#dbeafe;
+  color:#1e40af;
+}
 
-      .sidebar {
-        width: 100%;
-        padding: 12px;
-      }
+/* BUTTON */
 
-      .menu {
-        display: flex;
-        overflow-x: auto;
-        gap: 5px;
-      }
+.btn{
+  border:0;
+  border-radius:8px;
+  padding:10px 15px;
+  cursor:pointer;
+  font-weight:bold;
+  background:#111827;
+  color:white;
+}
 
-      .menu-title {
-        display: none;
-      }
+.btn:hover{
+  opacity:.85;
+}
 
-      .menu button {
-        white-space: nowrap;
-        width: auto;
-      }
+.btn-danger{
+  background:#dc2626;
+}
 
-      .main {
-        padding: 15px;
-      }
+.btn-green{
+  background:#16a34a;
+}
 
-      .cards {
-        grid-template-columns: 1fr 1fr;
-      }
+/* TABLE */
 
-      .grid {
-        grid-template-columns: 1fr;
-      }
+table{
+  width:100%;
+  border-collapse:collapse;
+}
 
-      .rooms {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
-  </style>
+th,td{
+  padding:12px;
+  text-align:left;
+  border-bottom:1px solid #eee;
+}
+
+th{
+  color:#6b7280;
+  font-size:13px;
+}
+
+/* MODAL */
+
+.modal{
+  display:none;
+  position:fixed;
+  z-index:100;
+  left:0;
+  top:0;
+  width:100%;
+  height:100%;
+  background:#00000080;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+.modal-box{
+  background:white;
+  width:100%;
+  max-width:500px;
+  padding:25px;
+  border-radius:15px;
+}
+
+.modal-box h2{
+  margin-bottom:20px;
+}
+
+.form-group{
+  margin-bottom:15px;
+}
+
+.form-group label{
+  display:block;
+  margin-bottom:6px;
+  font-size:13px;
+  font-weight:bold;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+  width:100%;
+  padding:11px;
+  border:1px solid #d1d5db;
+  border-radius:8px;
+}
+
+.modal-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .sidebar{
+    position:relative;
+    width:100%;
+    height:auto;
+    padding:12px;
+  }
+
+  .app{
+    display:block;
+  }
+
+  .main{
+    margin-left:0;
+    width:100%;
+    padding:15px;
+  }
+
+  .menu{
+    display:flex;
+    overflow-x:auto;
+    gap:5px;
+  }
+
+  .menu-title{
+    display:none;
+  }
+
+  .menu button{
+    white-space:nowrap;
+    width:auto;
+  }
+
+  .cards{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .rooms{
+    grid-template-columns:repeat(3,1fr);
+  }
+
+  .topbar{
+    align-items:flex-start;
+    gap:10px;
+  }
+
+  .topbar h1{
+    font-size:24px;
+  }
+
+  table{
+    min-width:600px;
+  }
+
+  .table-container{
+    overflow-x:auto;
+  }
+}
+
+@media(max-width:500px){
+
+  .cards{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .rooms{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <!-- SIDEBAR -->
+<!-- SIDEBAR -->
 
-  <aside class="sidebar">
+<aside class="sidebar">
 
-    <div class="logo">
-      🏨 AURASSI
-      <span>HOTEL MANAGEMENT SYSTEM</span>
-    </div>
+<div class="logo">
+🏨 AURASSI
+<small>HOTEL MANAGEMENT SYSTEM</small>
+</div>
 
-    <div class="menu">
+<div class="menu">
 
-      <div class="menu-title">Principal</div>
+<div class="menu-title">Principal</div>
 
-      <button class="active">
-        📊 Dashboard
-      </button>
+<button class="active" onclick="showPage('dashboard',this)">
+📊 Dashboard
+</button>
 
-      <button>
-        🛏️ Hébergement
-      </button>
+<button onclick="showPage('rooms',this)">
+🛏️ Hébergement
+</button>
 
-      <button>
-        📅 Réservations
-      </button>
+<button onclick="showPage('reservations',this)">
+📅 Réservations
+</button>
 
-      <button>
-        👤 Clients
-      </button>
+<div class="menu-title">Opérations</div>
 
-      <div class="menu-title">Opérations</div>
+<button onclick="showPage('housekeeping',this)">
+🧹 Housekeeping
+</button>
 
-      <button>
-        🧹 Housekeeping
-      </button>
+<button onclick="showPage('maintenance',this)">
+🔧 Maintenance
+</button>
 
-      <button>
-        🔧 Maintenance
-      </button>
+<button onclick="showPage('travaux',this)">
+🏗️ Travaux
+</button>
 
-      <button>
-        🏗️ Travaux
-      </button>
+<div class="menu-title">Personnel</div>
 
-      <div class="menu-title">Personnel</div>
-
-      <button>
-        👷 Employés
-      </button>
-
-      <button>
-        📋 Planning
-      </button>
-
-      <div class="menu-title">Finance</div>
-
-      <button>
-        💰 Facturation
-      </button>
-
-      <button>
-        📈 Rapports
-      </button>
-
-    </div>
-
-  </aside>
-
-
-  <!-- MAIN -->
-
-  <main class="main">
-
-    <div class="topbar">
-
-      <div>
-        <h1>Dashboard</h1>
-        <p>Service Hébergement</p>
-      </div>
-
-      <div class="user">
-        👤 Manager
-      </div>
-
-    </div>
-
-
-    <!-- KPI -->
-
-    <section class="cards">
-
-      <div class="card">
-        <div class="card-title">
-          Taux d'occupation
-        </div>
-
-        <div class="card-value">
-          78%
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-title">
-          Chambres occupées
-        </div>
-
-        <div class="card-value">
-          156
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-title">
-          Arrivées aujourd'hui
-        </div>
-
-        <div class="card-value">
-          24
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-title">
-          Départs aujourd'hui
-        </div>
-
-        <div class="card-value">
-          19
-        </div>
-      </div>
-
-    </section>
-
-
-    <div class="grid">
-
-
-      <!-- ROOMS -->
-
-      <div>
-
-        <div class="panel">
-
-          <h2>🏨 État des chambres</h2>
-
-          <div class="rooms">
-
-            <div class="room available">
-              101
-              <small>Disponible</small>
-            </div>
-
-            <div class="room occupied">
-              102
-              <small>Occupée</small>
-            </div>
-
-            <div class="room cleaning">
-              103
-              <small>Nettoyage</small>
-            </div>
-
-            <div class="room occupied">
-              104
-              <small>Occupée</small>
-            </div>
-
-            <div class="room maintenance">
-              105
-              <small>Maintenance</small>
-            </div>
-
-            <div class="room available">
-              106
-              <small>Disponible</small>
-            </div>
-
-            <div class="room occupied">
-              107
-              <small>Occupée</small>
-            </div>
-
-            <div class="room available">
-              108
-              <small>Disponible</small>
-            </div>
-
-            <div class="room cleaning">
-              109
-              <small>Nettoyage</small>
-            </div>
-
-            <div class="room occupied">
-              110
-              <small>Occupée</small>
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- MAINTENANCE -->
-
-        <div class="panel">
-
-          <h2>🔧 Interventions maintenance</h2>
-
-          <div class="task">
-
-            <div>
-              <strong>Chambre 105</strong>
-              <br>
-              <small>Climatisation en panne</small>
-            </div>
-
-            <span class="badge high">
-              URGENT
-            </span>
-
-          </div>
-
-
-          <div class="task">
-
-            <div>
-              <strong>Chambre 214</strong>
-              <br>
-              <small>Problème plomberie</small>
-            </div>
-
-            <span class="badge medium">
-              MOYEN
-            </span>
-
-          </div>
-
-
-          <div class="task">
-
-            <div>
-              <strong>Chambre 318</strong>
-              <br>
-              <small>Ampoule à remplacer</small>
-            </div>
-
-            <span class="badge low">
-              FAIBLE
-            </span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- RIGHT -->
-
-      <div>
-
-
-        <!-- HOUSEKEEPING -->
-
-        <div class="panel">
-
-          <h2>🧹 Housekeeping</h2>
-
-          <div class="task">
-            <span>À nettoyer</span>
-            <strong>12</strong>
-          </div>
-
-          <div class="task">
-            <span>En nettoyage</span>
-            <strong>5</strong>
-          </div>
-
-          <div class="task">
-            <span>Prêtes</span>
-            <strong>8</strong>
-          </div>
-
-          <div class="task">
-            <span>Inspection</span>
-            <strong>3</strong>
-          </div>
-
-        </div>
-
-
-        <!-- TRAVAUX -->
-
-        <div class="panel">
-
-          <h2>🏗️ Travaux</h2>
-
-          <div class="task">
-            <span>Chambres hors service</span>
-            <strong>4</strong>
-          </div>
-
-          <div class="task">
-            <span>Travaux en cours</span>
-            <strong>2</strong>
-          </div>
-
-          <div class="task">
-            <span>Travaux planifiés</span>
-            <strong>6</strong>
-          </div>
-
-        </div>
-
-
-        <!-- STAFF -->
-
-        <div class="panel">
-
-          <h2>👷 Personnel</h2>
-
-          <div class="task">
-            <span>Housekeeping</span>
-            <strong>18</strong>
-          </div>
-
-          <div class="task">
-            <span>Maintenance</span>
-            <strong>7</strong>
-          </div>
-
-          <div class="task">
-            <span>Réception</span>
-            <strong>9</strong>
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </main>
+<button onclick="showPage('personnel',this)">
+👷 Employés
+</button>
 
 </div>
+
+</aside>
+
+
+<!-- MAIN -->
+
+<main class="main">
+
+<div class="topbar">
+
+<div>
+<h1 id="pageTitle">Dashboard</h1>
+<p>Service Hébergement</p>
+</div>
+
+<div class="user">
+👤 Manager
+</div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="page active">
+
+<div class="cards">
+
+<div class="card">
+<div class="card-title">Taux d'occupation</div>
+<div class="card-value" id="occupation">0%</div>
+</div>
+
+<div class="card">
+<div class="card-title">Chambres occupées</div>
+<div class="card-value" id="occupiedCount">0</div>
+</div>
+
+<div class="card">
+<div class="card-title">Chambres disponibles</div>
+<div class="card-value" id="availableCount">0</div>
+</div>
+
+<div class="card">
+<div class="card-title">Maintenance</div>
+<div class="card-value" id="maintenanceCount">0</div>
+</div>
+
+</div>
+
+
+<div class="grid">
+
+<div>
+
+<div class="panel">
+
+<h2>🏨 État des chambres</h2>
+
+<div class="rooms" id="dashboardRooms"></div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>🔧 Interventions maintenance</h2>
+
+<div id="dashboardMaintenance"></div>
+
+</div>
+
+</div>
+
+
+<div>
+
+<div class="panel">
+
+<h2>🧹 Housekeeping</h2>
+
+<div class="task">
+<span>À nettoyer</span>
+<strong id="cleaningCount">0</strong>
+</div>
+
+<div class="task">
+<span>En nettoyage</span>
+<strong id="cleaningNow">0</strong>
+</div>
+
+<div class="task">
+<span>Prêtes</span>
+<strong id="readyCount">0</strong>
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>🏗️ Travaux</h2>
+
+<div class="task">
+<span>En cours</span>
+<strong id="workCount">0</strong>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ROOMS -->
+
+<section id="rooms" class="page">
+
+<div class="panel">
+
+<h2>🛏️ Gestion des chambres</h2>
+
+<p style="margin-bottom:15px;color:#6b7280">
+Cliquez sur une chambre pour modifier son état.
+</p>
+
+<div class="rooms" id="roomsList"></div>
+
+</div>
+
+</section>
+
+
+<!-- RESERVATIONS -->
+
+<section id="reservations" class="page">
+
+<div class="panel">
+
+<h2>📅 Réservations</h2>
+
+<button class="btn" onclick="addReservation()">
++ Nouvelle réservation
+</button>
+
+<div class="table-container" style="margin-top:20px">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Client</th>
+<th>Chambre</th>
+<th>Arrivée</th>
+<th>Départ</th>
+<th>Statut</th>
+</tr>
+
+</thead>
+
+<tbody id="reservationTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- HOUSEKEEPING -->
+
+<section id="housekeeping" class="page">
+
+<div class="panel">
+
+<h2>🧹 Housekeeping</h2>
+
+<div class="cards">
+
+<div class="card">
+<div class="card-title">À nettoyer</div>
+<div class="card-value" id="hkCleaning">0</div>
+</div>
+
+<div class="card">
+<div class="card-title">En nettoyage</div>
+<div class="card-value" id="hkProgress">0</div>
+</div>
+
+<div class="card">
+<div class="card-title">Prêtes</div>
+<div class="card-value" id="hkReady">0</div>
+</div>
+
+</div>
+
+<div class="table-container">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Chambre</th>
+<th>État</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="housekeepingTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- MAINTENANCE -->
+
+<section id="maintenance" class="page">
+
+<div class="panel">
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+
+<h2>🔧 Maintenance</h2>
+
+<button class="btn" onclick="openMaintenance()">
++ Nouveau signalement
+</button>
+
+</div>
+
+<div class="table-container" style="margin-top:20px">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Chambre</th>
+<th>Problème</th>
+<th>Priorité</th>
+<th>Technicien</th>
+<th>Statut</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="maintenanceTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- TRAVAUX -->
+
+<section id="travaux" class="page">
+
+<div class="panel">
+
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+
+<h2>🏗️ Travaux & Aménagement</h2>
+
+<button class="btn" onclick="openWork()">
++ Nouveau travail
+</button>
+
+</div>
+
+<div class="table-container" style="margin-top:20px">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Zone</th>
+<th>Travail</th>
+<th>Responsable</th>
+<th>Date</th>
+<th>Statut</th>
+</tr>
+
+</thead>
+
+<tbody id="workTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PERSONNEL -->
+
+<section id="personnel" class="page">
+
+<div class="panel">
+
+<h2>👷 Personnel</h2>
+
+<div class="cards">
+
+<div class="card">
+<div class="card-title">Housekeeping</div>
+<div class="card-value">18</div>
+</div>
+
+<div class="card">
+<div class="card-title">Maintenance</div>
+<div class="card-value">7</div>
+</div>
+
+<div class="card">
+<div class="card-title">Réception</div>
+<div class="card-value">9</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+<!-- ROOM MODAL -->
+
+<div class="modal" id="roomModal">
+
+<div class="modal-box">
+
+<h2 id="roomModalTitle">Chambre</h2>
+
+<div class="form-group">
+
+<label>État de la chambre</label>
+
+<select id="roomStatus">
+
+<option value="available">Disponible</option>
+<option value="occupied">Occupée</option>
+<option value="cleaning">Nettoyage</option>
+<option value="maintenance">Maintenance</option>
+<option value="out">Hors service</option>
+
+</select>
+
+</div>
+
+<div class="modal-buttons">
+
+<button class="btn" onclick="saveRoomStatus()">
+Enregistrer
+</button>
+
+<button class="btn btn-danger" onclick="closeModal('roomModal')">
+Annuler
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- MAINTENANCE MODAL -->
+
+<div class="modal" id="maintenanceModal">
+
+<div class="modal-box">
+
+<h2>🔧 Nouveau signalement</h2>
+
+<div class="form-group">
+
+<label>Chambre</label>
+
+<input id="mRoom" placeholder="Ex: 305">
+
+</div>
+
+<div class="form-group">
+
+<label>Problème</label>
+
+<textarea id="mProblem" placeholder="Décrire le problème"></textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>Priorité</label>
+
+<select id="mPriority">
+
+<option value="Urgent">Urgent</option>
+<option value="Moyenne">Moyenne</option>
+<option value="Faible">Faible</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Technicien</label>
+
+<input id="mTech" placeholder="Nom du technicien">
+
+</div>
+
+<div class="modal-buttons">
+
+<button class="btn" onclick="saveMaintenance()">
+Créer
+</button>
+
+<button class="btn btn-danger" onclick="closeModal('maintenanceModal')">
+Annuler
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- WORK MODAL -->
+
+<div class="modal" id="workModal">
+
+<div class="modal-box">
+
+<h2>🏗️ Nouveau travail</h2>
+
+<div class="form-group">
+
+<label>Zone / Chambre</label>
+
+<input id="wRoom" placeholder="Ex: Chambre 412">
+
+</div>
+
+<div class="form-group">
+
+<label>Travail</label>
+
+<textarea id="wDescription" placeholder="Ex: Peinture + plomberie"></textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>Responsable</label>
+
+<input id="wResponsible" placeholder="Responsable">
+
+</div>
+
+<div class="form-group">
+
+<label>Date</label>
+
+<input id="wDate" type="date">
+
+</div>
+
+<div class="modal-buttons">
+
+<button class="btn" onclick="saveWork()">
+Créer
+</button>
+
+<button class="btn btn-danger" onclick="closeModal('workModal')">
+Annuler
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* DATA */
+
+let rooms = [
+
+{id:"101",status:"available"},
+{id:"102",status:"occupied"},
+{id:"103",status:"cleaning"},
+{id:"104",status:"occupied"},
+{id:"105",status:"maintenance"},
+{id:"106",status:"available"},
+{id:"107",status:"occupied"},
+{id:"108",status:"available"},
+{id:"109",status:"cleaning"},
+{id:"110",status:"occupied"},
+{id:"111",status:"available"},
+{id:"112",status:"available"},
+{id:"201",status:"occupied"},
+{id:"202",status:"available"},
+{id:"203",status:"cleaning"}
+
+];
+
+let maintenance = [
+
+{
+room:"105",
+problem:"Climatisation en panne",
+priority:"Urgent",
+tech:"Ahmed",
+status:"En cours"
+},
+
+{
+room:"214",
+problem:"Problème plomberie",
+priority:"Moyenne",
+tech:"Karim",
+status:"Signalé"
+}
+
+];
+
+let works = [
+
+{
+room:"412",
+description:"Peinture",
+responsible:"Équipe Travaux",
+date:"2026-09-25",
+status:"En cours"
+}
+
+];
+
+let reservations = [
+
+{
+client:"Client Exemple",
+room:"102",
+arrival:"2026-09-22",
+departure:"2026-09-25",
+status:"Confirmée"
+}
+
+];
+
+let selectedRoom=null;
+
+
+/* NAVIGATION */
+
+function showPage(page,button){
+
+document.querySelectorAll(".page").forEach(p=>{
+p.classList.remove("active");
+});
+
+document.getElementById(page).classList.add("active");
+
+document.querySelectorAll(".menu button").forEach(b=>{
+b.classList.remove("active");
+});
+
+button.classList.add("active");
+
+let titles={
+
+dashboard:"Dashboard",
+rooms:"Hébergement",
+reservations:"Réservations",
+housekeeping:"Housekeeping",
+maintenance:"Maintenance",
+travaux:"Travaux & Aménagement",
+personnel:"Personnel"
+
+};
+
+document.getElementById("pageTitle").innerText=titles[page];
+
+renderAll();
+
+}
+
+
+/* ROOMS */
+
+function statusText(status){
+
+let names={
+
+available:"Disponible",
+occupied:"Occupée",
+cleaning:"Nettoyage",
+maintenance:"Maintenance",
+out:"Hors service"
+
+};
+
+return names[status];
+
+}
+
+
+function renderRooms(){
+
+let html="";
+
+rooms.forEach(room=>{
+
+html+=`
+
+<div class="room ${room.status}"
+onclick="openRoom('${room.id}')">
+
+${room.id}
+
+<small>
+${statusText(room.status)}
+</small>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("roomsList").innerHTML=html;
+
+document.getElementById("dashboardRooms").innerHTML=html;
+
+}
+
+
+function openRoom(id){
+
+selectedRoom=id;
+
+let room=rooms.find(r=>r.id===id);
+
+document.getElementById("roomModalTitle").innerText=
+"Chambre "+id;
+
+document.getElementById("roomStatus").value=room.status;
+
+document.getElementById("roomModal").style.display="flex";
+
+}
+
+
+function saveRoomStatus(){
+
+let room=rooms.find(r=>r.id===selectedRoom);
+
+room.status=document.getElementById("roomStatus").value;
+
+closeModal("roomModal");
+
+renderAll();
+
+}
+
+
+/* DASHBOARD */
+
+function updateDashboard(){
+
+let total=rooms.length;
+
+let occupied=rooms.filter(r=>r.status==="occupied").length;
+
+let available=rooms.filter(r=>r.status==="available").length;
+
+let cleaning=rooms.filter(r=>r.status==="cleaning").length;
+
+let maintenanceRooms=rooms.filter(r=>r.status==="maintenance").length;
+
+let occupation=Math.round((occupied/total)*100);
+
+document.getElementById("occupation").innerText=
+occupation+"%";
+
+document.getElementById("occupiedCount").innerText=occupied;
+
+document.getElementById("availableCount").innerText=available;
+
+document.getElementById("maintenanceCount").innerText=
+maintenanceRooms;
+
+document.getElementById("cleaningCount").innerText=cleaning;
+
+document.getElementById("cleaningNow").innerText=cleaning;
+
+document.getElementById("readyCount").innerText=available;
+
+document.getElementById("workCount").innerText=
+works.filter(w=>w.status==="En cours").length;
+
+}
+
+
+/* MAINTENANCE */
+
+function openMaintenance(){
+
+document.getElementById("maintenanceModal").style.display="flex";
+
+}
+
+
+function saveMaintenance(){
+
+let room=document.getElementById("mRoom").value;
+
+let problem=document.getElementById("mProblem").value;
+
+let priority=document.getElementById("mPriority").value;
+
+let tech=document.getElementById("mTech").value;
+
+if(!room || !problem){
+
+alert("Veuillez remplir la chambre et le problème.");
+
+return;
+
+}
+
+maintenance.push({
+
+room:room,
+problem:problem,
+priority:priority,
+tech:tech || "Non assigné",
+status:"Signalé"
+
+});
+
+let existing=rooms.find(r=>r.id===room);
+
+if(existing){
+
+existing.status="maintenance";
+
+}
+
+document.getElementById("mRoom").value="";
+document.getElementById("mProblem").value="";
+document.getElementById("mTech").value="";
+
+closeModal("maintenanceModal");
+
+renderAll();
+
+}
+
+
+function renderMaintenance(){
+
+let html="";
+
+maintenance.forEach((m,index)=>{
+
+let color=
+m.priority==="Urgent"?"red":
+m.priority==="Moyenne"?"orange":"green";
+
+html+=`
+
+<tr>
+
+<td>${m.room}</td>
+
+<td>${m.problem}</td>
+
+<td>
+<span class="badge ${color}">
+${m.priority}
+</span>
+</td>
+
+<td>${m.tech}</td>
+
+<td>${m.status}</td>
+
+<td>
+
+<button class="btn btn-green"
+onclick="finishMaintenance(${index})">
+
+Terminer
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("maintenanceTable").innerHTML=html;
+
+
+let dash="";
+
+maintenance.forEach(m=>{
+
+dash+=`
+
+<div class="task">
+
+<div>
+
+<strong>Chambre ${m.room}</strong>
+
+<br>
+
+<small>${m.problem}</small>
+
+</div>
+
+<span class="badge ${
+m.priority==="Urgent"?"red":
+m.priority==="Moyenne"?"orange":"green"
+}">
+
+${m.priority}
+
+</span>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("dashboardMaintenance").innerHTML=
+dash || "<p>Aucune intervention.</p>";
+
+}
+
+
+function finishMaintenance(index){
+
+let m=maintenance[index];
+
+m.status="Réparé";
+
+let room=rooms.find(r=>r.id===m.room);
+
+if(room){
+
+room.status="cleaning";
+
+}
+
+renderAll();
+
+alert("Intervention terminée. La chambre passe au nettoyage.");
+
+}
+
+
+/* HOUSEKEEPING */
+
+function renderHousekeeping(){
+
+let html="";
+
+rooms.forEach((room,index)=>{
+
+if(room.status==="cleaning" ||
+room.status==="available"){
+
+html+=`
+
+<tr>
+
+<td>${room.id}</td>
+
+<td>${statusText(room.status)}</td>
+
+<td>
+
+${
+room.status==="cleaning"
+
+?
+
+`<button class="btn btn-green"
+onclick="finishCleaning('${room.id}')">
+
+Marquer propre
+
+</button>`
+
+:
+
+`<span class="badge green">
+Prête
+</span>`
+
+}
+
+</td>
+
+</tr>
+
+`;
+
+}
+
+});
+
+document.getElementById("housekeepingTable").innerHTML=html;
+
+document.getElementById("hkCleaning").innerText=
+rooms.filter(r=>r.status==="cleaning").length;
+
+document.getElementById("hkProgress").innerText=0;
+
+document.getElementById("hkReady").innerText=
+rooms.filter(r=>r.status==="available").length;
+
+}
+
+
+function finishCleaning(id){
+
+let room=rooms.find(r=>r.id===id);
+
+room.status="available";
+
+renderAll();
+
+}
+
+
+/* TRAVAUX */
+
+function openWork(){
+
+document.getElementById("workModal").style.display="flex";
+
+}
+
+
+function saveWork(){
+
+let room=document.getElementById("wRoom").value;
+
+let description=document.getElementById("wDescription").value;
+
+let responsible=document.getElementById("wResponsible").value;
+
+let date=document.getElementById("wDate").value;
+
+if(!room || !description){
+
+alert("Veuillez remplir la zone et le travail.");
+
+return;
+
+}
+
+works.push({
+
+room:room,
+description:description,
+responsible:responsible || "Non assigné",
+date:date,
+status:"En cours"
+
+});
+
+let roomNumber=room.replace(/\D/g,"");
+
+let existing=rooms.find(r=>r.id===roomNumber);
+
+if(existing){
+
+existing.status="out";
+
+}
+
+closeModal("workModal");
+
+renderAll();
+
+}
+
+
+function renderWorks(){
+
+let html="";
+
+works.forEach(w=>{
+
+html+=`
+
+<tr>
+
+<td>${w.room}</td>
+
+<td>${w.description}</td>
+
+<td>${w.responsible}</td>
+
+<td>${w.date}</td>
+
+<td>
+
+<span class="badge orange">
+${w.status}
+</span>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("workTable").innerHTML=html;
+
+}
+
+
+/* RESERVATIONS */
+
+function addReservation(){
+
+let client=prompt("Nom du client:");
+
+if(!client)return;
+
+let room=prompt("Numéro de chambre:");
+
+if(!room)return;
+
+let arrival=prompt("Date d'arrivée:");
+
+let departure=prompt("Date de départ:");
+
+reservations.push({
+
+client:client,
+room:room,
+arrival:arrival,
+departure:departure,
+status:"Confirmée"
+
+});
+
+renderReservations();
+
+}
+
+
+function renderReservations(){
+
+let html="";
+
+reservations.forEach(r=>{
+
+html+=`
+
+<tr>
+
+<td>${r.client}</td>
+
+<td>${r.room}</td>
+
+<td>${r.arrival}</td>
+
+<td>${r.departure}</td>
+
+<td>
+<span class="badge green">
+${r.status}
+</span>
+</td>
+
+</tr>
+
+`;
+
+});
+
+document.getElementById("reservationTable").innerHTML=html;
+
+}
+
+
+/* MODAL */
+
+function closeModal(id){
+
+document.getElementById(id).style.display="none";
+
+}
+
+
+/* RENDER */
+
+function renderAll(){
+
+renderRooms();
+
+updateDashboard();
+
+renderMaintenance();
+
+renderHousekeeping();
+
+renderWorks();
+
+renderReservations();
+
+}
+
+
+/* START */
+
+renderAll();
+
+</script>
 
 </body>
 </html>
