@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AURASSI HOTEL SYSTEM</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #f4f5f7;
+      color: #222;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      width: 250px;
+      background: #111827;
+      color: white;
+      padding: 20px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 30px;
+    }
+
+    .logo span {
+      display: block;
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 5px;
+    }
+
+    .menu-title {
+      font-size: 11px;
+      color: #9ca3af;
+      margin: 20px 0 8px;
+      text-transform: uppercase;
+    }
+
+    .menu button {
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: #d1d5db;
+      text-align: left;
+      padding: 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .menu button:hover,
+    .menu button.active {
+      background: #374151;
+      color: white;
+    }
+
+    /* MAIN */
+
+    .main {
+      flex: 1;
+      padding: 25px;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+    }
+
+    .topbar h1 {
+      font-size: 26px;
+    }
+
+    .user {
+      background: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+
+    /* CARDS */
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+
+    .card-title {
+      color: #6b7280;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .card-value {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    /* CONTENT */
+
+    .grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .panel {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+      margin-bottom: 20px;
+    }
+
+    .panel h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+    }
+
+    /* ROOMS */
+
+    .rooms {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .room {
+      padding: 15px 8px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .available {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .occupied {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .cleaning {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .maintenance {
+      background: #e0e7ff;
+      color: #3730a3;
+    }
+
+    .room small {
+      display: block;
+      font-weight: normal;
+      margin-top: 5px;
+    }
+
+    /* TASKS */
+
+    .task {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    .task:last-child {
+      border-bottom: none;
+    }
+
+    .badge {
+      padding: 5px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .high {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .medium {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .low {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1000px) {
+
+      .sidebar {
+        width: 210px;
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .rooms {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 700px) {
+
+      .app {
+        display: block;
+      }
+
+      .sidebar {
+        width: 100%;
+        padding: 12px;
+      }
+
+      .menu {
+        display: flex;
+        overflow-x: auto;
+        gap: 5px;
+      }
+
+      .menu-title {
+        display: none;
+      }
+
+      .menu button {
+        white-space: nowrap;
+        width: auto;
+      }
+
+      .main {
+        padding: 15px;
+      }
+
+      .cards {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .rooms {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- SIDEBAR -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      🏨 AURASSI
+      <span>HOTEL MANAGEMENT SYSTEM</span>
+    </div>
+
+    <div class="menu">
+
+      <div class="menu-title">Principal</div>
+
+      <button class="active">
+        📊 Dashboard
+      </button>
+
+      <button>
+        🛏️ Hébergement
+      </button>
+
+      <button>
+        📅 Réservations
+      </button>
+
+      <button>
+        👤 Clients
+      </button>
+
+      <div class="menu-title">Opérations</div>
+
+      <button>
+        🧹 Housekeeping
+      </button>
+
+      <button>
+        🔧 Maintenance
+      </button>
+
+      <button>
+        🏗️ Travaux
+      </button>
+
+      <div class="menu-title">Personnel</div>
+
+      <button>
+        👷 Employés
+      </button>
+
+      <button>
+        📋 Planning
+      </button>
+
+      <div class="menu-title">Finance</div>
+
+      <button>
+        💰 Facturation
+      </button>
+
+      <button>
+        📈 Rapports
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- MAIN -->
+
+  <main class="main">
+
+    <div class="topbar">
+
+      <div>
+        <h1>Dashboard</h1>
+        <p>Service Hébergement</p>
+      </div>
+
+      <div class="user">
+        👤 Manager
+      </div>
+
+    </div>
+
+
+    <!-- KPI -->
+
+    <section class="cards">
+
+      <div class="card">
+        <div class="card-title">
+          Taux d'occupation
+        </div>
+
+        <div class="card-value">
+          78%
+        </div>
+      </div>
+
+
+      <div class="card">
+        <div class="card-title">
+          Chambres occupées
+        </div>
+
+        <div class="card-value">
+          156
+        </div>
+      </div>
+
+
+      <div class="card">
+        <div class="card-title">
+          Arrivées aujourd'hui
+        </div>
+
+        <div class="card-value">
+          24
+        </div>
+      </div>
+
+
+      <div class="card">
+        <div class="card-title">
+          Départs aujourd'hui
+        </div>
+
+        <div class="card-value">
+          19
+        </div>
+      </div>
+
+    </section>
+
+
+    <div class="grid">
+
+
+      <!-- ROOMS -->
+
+      <div>
+
+        <div class="panel">
+
+          <h2>🏨 État des chambres</h2>
+
+          <div class="rooms">
+
+            <div class="room available">
+              101
+              <small>Disponible</small>
+            </div>
+
+            <div class="room occupied">
+              102
+              <small>Occupée</small>
+            </div>
+
+            <div class="room cleaning">
+              103
+              <small>Nettoyage</small>
+            </div>
+
+            <div class="room occupied">
+              104
+              <small>Occupée</small>
+            </div>
+
+            <div class="room maintenance">
+              105
+              <small>Maintenance</small>
+            </div>
+
+            <div class="room available">
+              106
+              <small>Disponible</small>
+            </div>
+
+            <div class="room occupied">
+              107
+              <small>Occupée</small>
+            </div>
+
+            <div class="room available">
+              108
+              <small>Disponible</small>
+            </div>
+
+            <div class="room cleaning">
+              109
+              <small>Nettoyage</small>
+            </div>
+
+            <div class="room occupied">
+              110
+              <small>Occupée</small>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- MAINTENANCE -->
+
+        <div class="panel">
+
+          <h2>🔧 Interventions maintenance</h2>
+
+          <div class="task">
+
+            <div>
+              <strong>Chambre 105</strong>
+              <br>
+              <small>Climatisation en panne</small>
+            </div>
+
+            <span class="badge high">
+              URGENT
+            </span>
+
+          </div>
+
+
+          <div class="task">
+
+            <div>
+              <strong>Chambre 214</strong>
+              <br>
+              <small>Problème plomberie</small>
+            </div>
+
+            <span class="badge medium">
+              MOYEN
+            </span>
+
+          </div>
+
+
+          <div class="task">
+
+            <div>
+              <strong>Chambre 318</strong>
+              <br>
+              <small>Ampoule à remplacer</small>
+            </div>
+
+            <span class="badge low">
+              FAIBLE
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RIGHT -->
+
+      <div>
+
+
+        <!-- HOUSEKEEPING -->
+
+        <div class="panel">
+
+          <h2>🧹 Housekeeping</h2>
+
+          <div class="task">
+            <span>À nettoyer</span>
+            <strong>12</strong>
+          </div>
+
+          <div class="task">
+            <span>En nettoyage</span>
+            <strong>5</strong>
+          </div>
+
+          <div class="task">
+            <span>Prêtes</span>
+            <strong>8</strong>
+          </div>
+
+          <div class="task">
+            <span>Inspection</span>
+            <strong>3</strong>
+          </div>
+
+        </div>
+
+
+        <!-- TRAVAUX -->
+
+        <div class="panel">
+
+          <h2>🏗️ Travaux</h2>
+
+          <div class="task">
+            <span>Chambres hors service</span>
+            <strong>4</strong>
+          </div>
+
+          <div class="task">
+            <span>Travaux en cours</span>
+            <strong>2</strong>
+          </div>
+
+          <div class="task">
+            <span>Travaux planifiés</span>
+            <strong>6</strong>
+          </div>
+
+        </div>
+
+
+        <!-- STAFF -->
+
+        <div class="panel">
+
+          <h2>👷 Personnel</h2>
+
+          <div class="task">
+            <span>Housekeeping</span>
+            <strong>18</strong>
+          </div>
+
+          <div class="task">
+            <span>Maintenance</span>
+            <strong>7</strong>
+          </div>
+
+          <div class="task">
+            <span>Réception</span>
+            <strong>9</strong>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+
+</body>
+</html>
